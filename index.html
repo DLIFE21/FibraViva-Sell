@@ -38,6 +38,30 @@
     <label>Cantidad de paquetes:
       <input type="number" id="cantidad" value="1" min="1">
     </label><br><br>
+    <!-- Resumen de compra -->
+<div id="resumenCompra" style="margin-top:10px; font-weight:bold; display:none;">
+    Total a pagar: RD$0
+</div>
+
+<script>
+    const precioUnitario = 350;
+    const inputCantidad = document.getElementById("cantidad");
+    const resumenDiv = document.getElementById("resumenCompra");
+
+    // Detecta cambios en la cantidad
+    inputCantidad.addEventListener("input", () => {
+        let cantidad = parseInt(inputCantidad.value) || 0;
+        let total = cantidad * precioUnitario;
+
+        if (cantidad > 0) {
+            resumenDiv.style.display = "block";
+            resumenDiv.textContent = `Total a pagar: RD$${total}`;
+        } else {
+            resumenDiv.style.display = "none";
+        }
+    });
+</script>
+
 
     <!-- Botón inicial -->
 <button id="botonComprar">Comprar ahora</button>
