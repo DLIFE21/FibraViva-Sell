@@ -6,6 +6,7 @@
   <title>Galletas FibraViva</title>
   <link rel="stylesheet" href="estilos.css">
 </head>
+  
 <body>
 
   <!-- SECCIÓN: INICIO -->
@@ -85,15 +86,28 @@
   </footer>
 
 <script>
-  document.getElementById('botonComprar').addEventListener('click', function(){
-    document.getElementById('formularioCompra').style.display = 'block';
-  });
+  function mostrarCamposPago() {
+    const metodo = document.getElementById("metodoPago").value;
+    document.getElementById("camposTarjeta").style.display = metodo === "tarjeta" ? "block" : "none";
+    document.getElementById("camposEfectivo").style.display = metodo === "efectivo" ? "block" : "none";
+    document.getElementById("camposTransferencia").style.display = metodo === "transferencia" ? "block" : "none";
+  }
 
-  document.getElementById('metodoPago').addEventListener('change', function(){
-    const metodo = this.value;
-    document.getElementById('pagoTransferencia').style.display = (metodo === 'transferencia' ? 'block' : 'none');
-    document.getElementById('pagoTarjeta').style.display = (metodo === 'tarjeta' ? 'block' : 'none');
-  });
+  function procesarPago(event) {
+    event.preventDefault(); // evita recargar la página
+
+    const metodo = document.getElementById("metodoPago").value;
+
+    // Si es transferencia, no mostramos alerta de éxito (como pediste)
+    if (metodo === "transferencia") {
+      alert("Por favor realice la transferencia a la cuenta indicada.");
+      return;
+    }
+
+    // Para tarjeta o efectivo mostramos mensaje de éxito
+    alert("Pago realizado con éxito");
+  }
 </script>
+
 </body>
 </html>
