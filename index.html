@@ -67,8 +67,51 @@
       </div>
     </div>
   </section>
+<script>
+  // Botón principal
+  const botonComprar = document.getElementById("botonComprar");
+  const formularioCompra = document.getElementById("formularioCompra");
 
-  <!-- SECCIÓN: CONTACTO -->
+  // Elementos del formulario
+  const metodoPagoSelect = document.getElementById("metodoPago");
+  const camposTarjeta = document.getElementById("camposTarjeta");
+  const botonConfirmar = document.getElementById("confirmarCompra");
+
+  // Mostrar formulario al dar clic en "Comprar ahora"
+  botonComprar.addEventListener("click", () => {
+    formularioCompra.style.display = "block";
+  });
+
+  // Mostrar/ocultar campos de tarjeta según el método de pago
+  metodoPagoSelect.addEventListener("change", () => {
+    if (metodoPagoSelect.value === "tarjeta") {
+      camposTarjeta.style.display = "block";
+    } else {
+      camposTarjeta.style.display = "none";
+    }
+  });
+
+  // Confirmar compra
+  botonConfirmar.addEventListener("click", () => {
+    const metodo = metodoPagoSelect.value;
+
+    if (!metodo) {
+      alert("Por favor, selecciona un método de pago.");
+      return;
+    }
+
+    if (metodo === "tarjeta") {
+      alert("✅ Pago realizado con éxito con tarjeta.");
+    } else if (metodo === "efectivo") {
+      alert("✅ Compra realizada. Pagarás al recibir el producto.");
+    }
+
+    // Ocultar formulario después de confirmar
+    formularioCompra.style.display = "none";
+  });
+</script>
+
+ <!-- SECCIÓN: CONTACTO -->
   <section id="contacto" class="seccion">
     <h2>Contacto</h2>
     <p><strong>Dirección:</strong> Abraham Lincoln con esquina A, Calle José Amado Soler #104</p>
@@ -84,72 +127,6 @@
   <footer>
     <p>© 2025 Fibra Viva - Proyecto académico para Tecnología de los Alimentos</p>
   </footer>
-
-<script>
-// Detectar clic en el botón de compra
-document.getElementById("botonComprar").addEventListener("click", function () {
-    // Mostrar el formulario de datos de pago y dirección
-    let formulario = document.createElement("div");
-    formulario.innerHTML = `
-        <h3>Datos de compra</h3>
-        <label>Cantidad de paquetes:</label>
-        <input type="number" id="cantidadGalletas" min="1" value="1"><br><br>
-
-        <label>Dirección de envío:</label>
-        <input type="text" id="direccionEnvio" placeholder="Ingresa tu dirección"><br><br>
-
-        <label>Método de pago:</label>
-        <select id="metodoPago">
-            <option value="">--Seleccionar--</option>
-            <option value="transferencia">Transferencia</option>
-            <option value="tarjeta">Tarjeta</option>
-            <option value="efectivo">Efectivo</option>
-        </select><br><br>
-
-        <div id="camposExtra"></div>
-        <button id="confirmarPago">Confirmar pago</button>
-    `;
-    document.body.appendChild(formulario);
-
-    // Detectar cambio de método de pago
-    document.getElementById("metodoPago").addEventListener("change", function () {
-        let metodo = this.value;
-        let extra = document.getElementById("camposExtra");
-        extra.innerHTML = "";
-
-        if (metodo === "transferencia") {
-            extra.innerHTML = `<p>Realiza la transferencia a la cuenta: <b>123-456789-0 Banco Ejemplo</b></p>`;
-        } else if (metodo === "tarjeta") {
-            extra.innerHTML = `
-                <label>Número de tarjeta:</label>
-                <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX"><br><br>
-                <label>Fecha de expiración:</label>
-                <input type="text" placeholder="MM/AA"><br><br>
-                <label>CVV:</label>
-                <input type="text" placeholder="123"><br><br>
-            `;
-        } else if (metodo === "efectivo") {
-            extra.innerHTML = `<p>Pagas al recibir el producto.</p>`;
-        }
-    });
-
-    // Confirmar pago
-    document.getElementById("confirmarPago").addEventListener("click", function () {
-        let metodo = document.getElementById("metodoPago").value;
-
-        if (metodo === "") {
-            alert("Por favor selecciona un método de pago.");
-            return;
-        }
-
-        // Solo mostrar alerta para tarjeta y efectivo
-        if (metodo === "tarjeta" || metodo === "efectivo") {
-            alert("Pago realizado con éxito");
-        }
-    });
-});
-</script>
-
 
 </body>
 </html>
