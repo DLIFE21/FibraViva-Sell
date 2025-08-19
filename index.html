@@ -39,77 +39,68 @@
       <input type="number" id="cantidad" value="1" min="1">
     </label><br><br>
 
-    <button id="botonComprar">Comprar ahora</button>
+    <!-- Botón inicial -->
+<button id="botonComprar">Comprar ahora</button>
 
-    <div id="formularioCompra" style="display:none; margin-top:20px;">
-      <label>Dirección de envío:
-        <input type="text" id="direccion" placeholder="Ej: Calle #, Sector, Ciudad">
-      </label><br><br>
+<!-- Contenedor dinámico -->
+<div id="formularioCompra" style="display:none; margin-top:10px;">
+  <label for="direccion">Dirección de envío:</label><br>
+  <input type="text" id="direccion" placeholder="Escribe tu dirección" style="width: 100%; margin-bottom:10px;"><br>
 
-      <label>Método de pago:
-        <select id="metodoPago">
-          <option value="">Seleccione...</option>
-          <option value="transferencia">Transferencia Bancaria</option>
-          <option value="tarjeta">Tarjeta</option>
-          <option value="efectivo">Efectivo</option>
-        </select>
-      </label>
+  <label for="metodoPago">Método de pago:</label><br>
+  <select id="metodoPago" style="width: 100%; margin-bottom:10px;">
+    <option value="">Selecciona...</option>
+    <option value="transferencia">Transferencia</option>
+    <option value="tarjeta">Tarjeta</option>
+    <option value="efectivo">Efectivo</option>
+  </select>
 
-      <div id="pagoTransferencia" style="display:none; margin-top:10px;">
-        <p><strong>Cuenta bancaria:</strong> Banco Popular — 799872345 — A nombre de FibraViva SRL</p>
-      </div>
+  <!-- Campos adicionales según método -->
+  <div id="camposExtra" style="margin-top:10px;"></div>
+</div>
 
-      <div id="pagoTarjeta" style="display:none; margin-top:10px;">
-        <input type="text" placeholder="Nombre en tarjeta"><br><br>
-        <input type="text" placeholder="Número de tarjeta"><br><br>
-        <input type="text" placeholder="MM/AA"><br><br>
-        <input type="text" placeholder="CVV"><br>
-      </div>
-    </div>
-  </section>
 <script>
-  // Botón principal
   const botonComprar = document.getElementById("botonComprar");
   const formularioCompra = document.getElementById("formularioCompra");
+  const metodoPago = document.getElementById("metodoPago");
+  const camposExtra = document.getElementById("camposExtra");
 
-  // Elementos del formulario
-  const metodoPagoSelect = document.getElementById("metodoPago");
-  const camposTarjeta = document.getElementById("camposTarjeta");
-  const botonConfirmar = document.getElementById("confirmarCompra");
-
-  // Mostrar formulario al dar clic en "Comprar ahora"
+  // Mostrar formulario al dar clic en comprar
   botonComprar.addEventListener("click", () => {
     formularioCompra.style.display = "block";
   });
 
-  // Mostrar/ocultar campos de tarjeta según el método de pago
-  metodoPagoSelect.addEventListener("change", () => {
-    if (metodoPagoSelect.value === "tarjeta") {
-      camposTarjeta.style.display = "block";
-    } else {
-      camposTarjeta.style.display = "none";
-    }
-  });
+  // Cambiar dinámicamente según método seleccionado
+  metodoPago.addEventListener("change", () => {
+    camposExtra.innerHTML = ""; // Limpiar antes
 
-  // Confirmar compra
-  botonConfirmar.addEventListener("click", () => {
-    const metodo = metodoPagoSelect.value;
-
-    if (!metodo) {
-      alert("Por favor, selecciona un método de pago.");
-      return;
+    if (metodoPago.value === "transferencia") {
+      camposExtra.innerHTML = `
+        <p>Realiza la transferencia a la cuenta: <b>Banco XYZ - 123456789</b></p>
+      `;
     }
 
-    if (metodo === "tarjeta") {
-      alert("✅ Pago realizado con éxito con tarjeta.");
-    } else if (metodo === "efectivo") {
-      alert("✅ Compra realizada. Pagarás al recibir el producto.");
+    if (metodoPago.value === "tarjeta") {
+      camposExtra.innerHTML = `
+        <label>Número de tarjeta:</label><br>
+        <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx" style="width: 100%; margin-bottom:10px;"><br>
+        <label>Fecha de expiración:</label><br>
+        <input type="text" placeholder="MM/AA" style="margin-bottom:10px;"><br>
+        <label>CVV:</label><br>
+        <input type="text" placeholder="123" style="margin-bottom:10px;"><br>
+        <button onclick="alert('Pago realizado con éxito')">Confirmar pago</button>
+      `;
     }
 
-    // Ocultar formulario después de confirmar
-    formularioCompra.style.display = "none";
+    if (metodoPago.value === "efectivo") {
+      camposExtra.innerHTML = `
+        <p>El pago se realizará en efectivo al momento de la entrega.</p>
+        <button onclick="alert('Pago realizado con éxito')">Confirmar pedido</button>
+      `;
+    }
   });
 </script>
+
 
  <!-- SECCIÓN: CONTACTO -->
   <section id="contacto" class="seccion">
